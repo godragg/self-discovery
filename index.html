@@ -199,8 +199,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f3ff;color:#1A136
 <div class="section-label">How to use this page</div>
 <div class="steps">
   <div class="step"><div class="step-num">1</div><h3>Reflect</h3><p>Fill the prompts honestly — no right answers.</p></div>
-  <div class="step"><div class="step-num">3</div><h3>Iterate</h3><p>Define your Keyword of the year, North Star, Backlog, and Sprint</p></div>
-  <div class="step"><div class="step-num">4</div><h3>Share</h3><p>Share with your significant others or feel free to book a chat with Garra</p></div>
+  <div class="step"><div class="step-num">2</div><h3>Iterate</h3><p>Define your Keyword of the year, North Star, Backlog, and Sprint</p></div>
+  <div class="step"><div class="step-num">3</div><h3>Share</h3><p>Share with your significant others or feel free to book a chat with Garra</p></div>
 </div>
 
 <div class="divider"></div>
@@ -298,7 +298,17 @@ What does this tell you about what I might be longing for right now?</div>
 <div class="divider"></div>
 
 <!-- ── ITERATE ── -->
-<div id="iterate" class="section-label">Iterate — define your north star, backlog &amp; sprint</div>
+<div id="iterate" class="section-label">Iterate</div>
+
+  <!-- ── Keyword ── -->  
+ <div class="keyword-box" id="keyword">
+    <label>✨ What's your keyword for this year?</label>
+    <div class="keyword-row">
+      <input class="keyword-input" id="kw-input" type="text" maxlength="40" placeholder='e.g. "Leap" · "Try" · "Roots" · "Build"'>
+      <button class="keyword-btn" onclick="submitKeyword()">Add mine →</button>
+    </div>
+   </div>
+</div>
 
 <div class="prompt-card green">
   <h2>🔄 Iteration Template</h2>
@@ -340,15 +350,6 @@ What does this tell you about what I might be longing for right now?</div>
 </div>
 
 <div class="divider"></div>
-
-<!-- ── Keyword ── -->  
- <div class="keyword-box" id="keyword">
-    <label>✨ What's your keyword for this year?</label>
-    <div class="keyword-row">
-      <input class="keyword-input" id="kw-input" type="text" maxlength="40" placeholder='e.g. "Leap" · "Try" · "Roots" · "Build"'>
-      <button class="keyword-btn" onclick="submitKeyword()">Add mine →</button>
-    </div>
-  
 
 
   
