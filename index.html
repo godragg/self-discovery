@@ -179,7 +179,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f3ff;color:#1A136
 <nav class="nav">
   <a class="nav-brand" href="#">Product Vision: Self Edition</a>
   <div class="nav-links">
-    <a href="#keyword">Keyword</a>
     <a href="#reflect">Reflect</a>
     <a href="#iterate">Iterate</a>
     <a href="#community">Community</a>
@@ -191,14 +190,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f3ff;color:#1A136
   <div class="eyebrow">Product Vision: Self Edition · WIP Montréal</div>
   <h1>Your Career <span>Self-Discovery</span> Toolkit</h1>
 
-
-  <div class="keyword-box" id="keyword">
-    <label>✨ What's your keyword for this year?</label>
-    <div class="keyword-row">
-      <input class="keyword-input" id="kw-input" type="text" maxlength="40" placeholder='e.g. "Leap" · "Try" · "Roots" · "Build"'>
-      <button class="keyword-btn" onclick="submitKeyword()">Add mine →</button>
-    </div>
-
   </div>
 </div>
 
@@ -208,8 +199,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f3ff;color:#1A136
 <div class="section-label">How to use this page</div>
 <div class="steps">
   <div class="step"><div class="step-num">1</div><h3>Reflect</h3><p>Fill the prompts honestly — no right answers.</p></div>
-  <div class="step"><div class="step-num">2</div><h3>Name your keyword</h3><p>What's your intention for this year? One word.</p></div>
-  <div class="step"><div class="step-num">3</div><h3>Iterate</h3><p>Define your North Star, Backlog, and Sprint</p></div>
+  <div class="step"><div class="step-num">3</div><h3>Iterate</h3><p>Define your Keyword of the year, North Star, Backlog, and Sprint</p></div>
   <div class="step"><div class="step-num">4</div><h3>Share</h3><p>Share with your significant others or feel free to book a chat with Garra</p></div>
 </div>
 
@@ -245,7 +235,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f3ff;color:#1A136
         <li>Start of each quarter</li>
         <li>After a tough week or big project</li>
         <li>Whenever you feel flat or off</li>
-        <li>Revisit 4 weeks after each sprint</li>
       </ul>
     </div>
   </div>
@@ -352,6 +341,17 @@ What does this tell you about what I might be longing for right now?</div>
 
 <div class="divider"></div>
 
+<!-- ── Keyword ── -->  
+ <div class="keyword-box" id="keyword">
+    <label>✨ What's your keyword for this year?</label>
+    <div class="keyword-row">
+      <input class="keyword-input" id="kw-input" type="text" maxlength="40" placeholder='e.g. "Leap" · "Try" · "Roots" · "Build"'>
+      <button class="keyword-btn" onclick="submitKeyword()">Add mine →</button>
+    </div>
+  
+
+
+  
 <!-- ── Community ── -->
 <div id="community" class="section-label">Community</div>
 
@@ -523,7 +523,7 @@ What does this tell you about what I might be longing for right now?</div>
 <div class="footer">
   Product Vision: Self Edition · WIP Montréal<br>
   Made with ♥ by <a href="https://www.linkedin.com/in/garrag/" target="_blank">Garra Gao</a><br><br>
-  Revisit your sprint bet in 4 weeks. Did you ship it? What did you learn?
+  What did you learn about yourself today?
 </div>
 
 <textarea id="copy-ta" aria-hidden="true"></textarea>
