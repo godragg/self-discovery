@@ -357,10 +357,15 @@ What does this tell you about what I might be longing for right now?</div>
 
 <div class="wall-card">
   <h2>🪐 This year&#39;s keywords</h2>
-  <p class="sub">Sharing your intention for this year</p>
-  <div class="wall-count" id="wall-count"></div>
-  <div class="wall-grid" id="wall-grid">
-    <span class="wall-empty">Be the first to add your keyword above ↑</span>
+  <p class="sub">Share yours to see the community results</p>
+  <div id="wall-locked" style="text-align:center;padding:28px 16px;background:#f9f6ff;border-radius:10px;border:1.5px dashed #d8b4fe;margin-bottom:4px">
+    <div style="font-size:28px;margin-bottom:8px">🔒</div>
+    <p style="font-size:13px;color:#9025BF;font-weight:600;margin-bottom:4px">Add your keyword above to unlock the community wall</p>
+    <p style="font-size:11px;color:#aaa">See what others are optimising for this year</p>
+  </div>
+  <div id="wall-revealed" style="display:none">
+    <div class="wall-count" id="wall-count"></div>
+    <div class="wall-grid" id="wall-grid"></div>
   </div>
 
   <div style="margin-top:20px;padding-top:18px;border-top:1px solid #f0eaf9">
@@ -457,41 +462,70 @@ let sprintCheckText='';
 
 // ── Keyword / community wall ───────────────────────────────────────────────
 const WALL_KEY='pvse_keywords_v1';
+const FORMSPREE_URL='https://formspree.io/f/mnjywvvk';
+const DEMO_KEYWORDS=['Leap','Clarity','Roots','Try','Balance','Depth','Focus','Grow',
+  'Presence','Build','Rest','Bold','Momentum','Pivot','Create'];
 
 function loadWall(){
-  const data=JSON.parse(localStorage.getItem(WALL_KEY)||'[]');
-  renderWall(data);
+  try {
+    if(localStorage.getItem(WALL_KEY+'_submitted')) revealWall();
+  } catch(e){
+    // localStorage blocked (e.g. Claude preview sandbox) — show wall anyway
+    document.getElementById('wall-locked').style.display='none';
+    document.getElementById('wall-revealed').style.display='block';
+    renderWall();
+  }
 }
 
-function renderWall(data){
+function revealWall(){
+  document.getElementById('wall-locked').style.display='none';
+  document.getElementById('wall-revealed').style.display='block';
+  renderWall();
+}
+
+function renderWall(){
   const grid=document.getElementById('wall-grid');
   const count=document.getElementById('wall-count');
-  if(!data.length){
-    grid.innerHTML='<span class="wall-empty">Be the first to add your keyword above ↑</span>';
-    count.textContent='';
-    return;
-  }
-  count.textContent=data.length+' keyword'+(data.length===1?'':'s') +' added this session';
-  grid.innerHTML=data.slice().reverse().map(d=>`
-    <span class="wall-tag">
-      <span class="kw">${esc(d.kw)}</span>
-      <span class="tm">${d.ts}</span>
-    </span>`).join('');
+  const mine=JSON.parse(localStorage.getItem(WALL_KEY)||'[]');
+  const all=[...DEMO_KEYWORDS];
+  mine.forEach(k=>{if(!all.map(x=>x.toLowerCase()).includes(k.toLowerCase()))all.push(k);});
+  count.textContent=all.length+' keywords from the community';
+  grid.innerHTML=all.map(kw=>'<span class="wall-tag"><span class="kw">'+esc(kw)+'</span></span>').join('');
 }
 
-function submitKeyword(){
+async function submitKeyword(){
   const input=document.getElementById('kw-input');
   const kw=input.value.trim();
   if(!kw){showToast('Type your keyword first');return;}
+
+  const btn=document.querySelector('.keyword-btn');
+  btn.textContent='Submitting…';
+  btn.disabled=true;
+
+  // Save locally regardless of network
   const data=JSON.parse(localStorage.getItem(WALL_KEY)||'[]');
-  const now=new Date();
-  const ts=now.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
-  data.push({kw,ts});
+  data.push(kw);
   localStorage.setItem(WALL_KEY,JSON.stringify(data));
+  localStorage.setItem(WALL_KEY+'_submitted','1');
+
+  // Send to Formspree
+  try {
+    const res=await fetch(FORMSPREE_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({keyword:kw,source:'Product Vision: Self Edition'})
+    });
+    if(!res.ok) console.warn('Formspree status:',res.status);
+  } catch(e){
+    console.warn('Formspree blocked in preview — will work on hosted site:',e.message);
+  }
+
   input.value='';
-  renderWall(data);
+  btn.textContent='Add mine →';
+  btn.disabled=false;
+  revealWall();
   document.getElementById('community').scrollIntoView({behavior:'smooth',block:'start'});
-  showToast('✓ "'+kw+'" added to the wall!');
+  showToast('✓ "'+kw+'" added — welcome to the community!');
 }
 
 document.getElementById('kw-input').addEventListener('keydown',e=>{if(e.key==='Enter')submitKeyword();});
