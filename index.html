@@ -301,13 +301,25 @@ What does this tell you about what I might be longing for right now?</div>
 <div id="iterate" class="section-label">Iterate</div>
 
   <!-- ── Keyword ── -->  
- <div class="keyword-box" id="keyword">
-    <label>✨ What's your keyword for this year?</label>
-    <div class="keyword-row">
-      <input class="keyword-input" id="kw-input" type="text" maxlength="40" placeholder='e.g. "Leap" · "Try" · "Roots" · "Build"'>
-      <button class="keyword-btn" onclick="submitKeyword()">Add mine →</button>
+ <div class="prompt-card green">
+  <h2>🗝️ Your keyword of the year</h2>
+
+  <div class="canvas-grid">
+    <div class="canvas-box full">
+      <h3>✨ What's your intention for this year?</h3>
+      <p>One word or short phrase that captures what you're optimising for.</p>
+      <p class="eg">e.g. "Leap" · "Try" · "Roots" · "Build" · "Rest" · "Bold"</p>
+      <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+        <input class="canvas-input" id="kw-input" type="text" maxlength="40"
+          placeholder="Type your keyword…"
+          style="min-height:auto;height:42px;resize:none;flex:1">
+        <button class="btn btn-teal" onclick="submitKeyword()" style="white-space:nowrap;height:42px">
+          Add mine →
+        </button>
+      </div>
     </div>
-   </div>
+  </div>
+</div>
 
 <div class="prompt-card green">
   <h2>🔄 Iteration Template</h2>
