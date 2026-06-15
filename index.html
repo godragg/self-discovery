@@ -777,5 +777,80 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 // ── Init ──────────────────────────────────────────────────────────────────────
 loadWall();
 </script>
+
+<!-- ── Click Tracking ──────────────────────────────────────────────────────── -->
+<script>
+function track(label) {
+  gtag('event', 'click', { event_category: 'CTA', event_label: label });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  // ── Nav links ──────────────────────────────────────────────────────────────
+  document.querySelector('a[href="#reflect"]')
+    ?.addEventListener('click', () => track('Nav: Reflect'));
+  document.querySelector('a[href="#iterate"]')
+    ?.addEventListener('click', () => track('Nav: Iterate'));
+  document.querySelector('a[href="#community"]')
+    ?.addEventListener('click', () => track('Nav: Community'));
+
+  // ── Keyword submission ─────────────────────────────────────────────────────
+  document.querySelector('.keyword-btn')
+    ?.addEventListener('click', () => track('Keyword: Submitted'));
+
+  // ── Reflect: copy prompt buttons ───────────────────────────────────────────
+  document.querySelectorAll('.prompt-card button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.prompt-card');
+      const heading = card?.querySelector('h2')?.textContent?.trim() || 'Unknown';
+      track('Copy Prompt: ' + heading);
+    });
+  });
+
+  // ── Open Claude buttons ────────────────────────────────────────────────────
+  document.querySelectorAll('a[href="https://claude.ai"]').forEach(link => {
+    link.addEventListener('click', () => {
+      const card = link.closest('.prompt-card');
+      const heading = card?.querySelector('h2')?.textContent?.trim() || 'Unknown';
+      track('Open Claude: ' + heading);
+    });
+  });
+
+  // ── Iteration template ─────────────────────────────────────────────────────
+  document.querySelector('button[onclick="checkSprint()"]')
+    ?.addEventListener('click', () => track('Iterate: Check Sprint'));
+  document.querySelector('button[onclick="copyFull()"]')
+    ?.addEventListener('click', () => track('Iterate: Copy Full Canvas'));
+
+  // ── Community: Calendly ────────────────────────────────────────────────────
+  document.querySelector('a[href*="calendly.com"]')
+    ?.addEventListener('click', () => track('Community: Book Coffee Chat'));
+
+  // ── Community: Email Garra ─────────────────────────────────────────────────
+  document.querySelector('a[href*="mailto"]')
+    ?.addEventListener('click', () => track('Community: Email Garra'));
+
+  // ── PM table toggle ────────────────────────────────────────────────────────
+  document.querySelector('button[onclick="toggleTable()"]')
+    ?.addEventListener('click', () => {
+      const isOpen = document.getElementById('table-body')?.classList.contains('open');
+      track('PM Table: ' + (isOpen ? 'Collapsed' : 'Expanded'));
+    });
+
+  // ── Soul-searching questions ───────────────────────────────────────────────
+  document.querySelectorAll('details').forEach(detail => {
+    detail.addEventListener('toggle', () => {
+      if (detail.open) {
+        const q = detail.querySelector('summary')?.textContent?.trim().slice(0, 60) || 'Unknown';
+        track('Question Opened: ' + q);
+      }
+    });
+  });
+
+});
+</script>
+
+
+  
 </body>
 </html>
